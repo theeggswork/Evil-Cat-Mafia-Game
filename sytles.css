@@ -1,0 +1,41 @@
+#Canvas_Container {
+  position: relative;
+  width: 1002px;
+  height: 702px;
+  overflow: hidden
+}
+
+#Canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#AMMO_COUNTER {
+  transition: transform 0.30s, box-shadow 0.30s;
+  position: absolute;
+  top: 525px;
+  left: 0px;
+
+  width: 175px;
+  height: 175px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  color: rgb(0, 0, 0);
+  font-size: 25px;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
+#AMMO_COUNTER.pop {
+  transform: scale(1.1)
+}
+
+#AMMO_COUNTER.big_pop {
+  transform: scale(1.3)
+}
