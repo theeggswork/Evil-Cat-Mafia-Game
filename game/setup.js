@@ -17,23 +17,23 @@ canvas.addEventListener('mousemove', (event) => {
 });
 
 let character = {
+    id: crypto.randomUUID(),
     x: 400,
     y: 350,
     oldx: 0,
     oldy: 0,
     width: 75,
     height: 75,
+    angle: 0,
+    hp: 100,
 }
 let speedx = 0
 let speedy = 0
 let canshoot = true
-let dx;
-let dy;
 let ammo = 30
 let maxammo = 60
 let reloadammo = 0
 let pframe = 0
-let catimage;
 function isColliding(a, b) {
     return (
         a.x < b.x + b.width &&

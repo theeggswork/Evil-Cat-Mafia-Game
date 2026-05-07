@@ -5,6 +5,7 @@ function Movement() {
     speedy *= 0.9
     character.x += speedx
     character.y += speedy
+    character.angle = Math.atan2(mouseY - (character.y + (character.height / 2)), mouseX - (character.x +(character.width / 2)));
     objectdata.forEach((obj, index) => { // AABB Collisions for each object inside of Object_Data
         if (isColliding(character, obj)) {
             if (obj.collision == true) {
@@ -35,7 +36,7 @@ function KeyDetection() {
         speedy += 0.5
     }
     if (keysPressed['Space'] && canshoot == true && ammo > 0) { // ammo
-        CreateBullet()
+        ShootBullet()
         canshoot = false
         ammo -= 1
         AMMO_COUNTER.classList.add("pop");
@@ -47,7 +48,7 @@ function KeyDetection() {
         EmptyBullets.currentTime = 0
         EmptyBullets.play()
     }
-    if (keysPressed['KeyR']) { // Reload
+    if (keysPressed['KeyR'] && ammo < 30) { // Reload
         if (maxammo > 0) {
             ReloadBullets.currentTime = 0
             ReloadBullets.play()

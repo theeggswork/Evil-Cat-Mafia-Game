@@ -14,18 +14,6 @@ function Defineblock(x, y, width, height, collision, img, type, value) {
     }
     objectdata.push(newobject)
 }
-function Definebullet(dx, dy, x, y, width, height, angle) {
-    let bulletobject = {
-        dx: dx,
-        dy: dy,
-        x: x,
-        y: y,
-        width: width,
-        height: height,
-        angle: angle,
-    }
-    bulletdata.push(bulletobject)
-}
 
 function DefineText(text, x, y) {
     let textobject = {
@@ -36,23 +24,60 @@ function DefineText(text, x, y) {
     textdata.push(textobject)
 }
 
-function CreateBullet() {
-    let angle = Math.atan2(mouseY - (character.y + (character.height / 2)), mouseX - (character.x +(character.width / 2)));
-    dx = Math.cos(angle) * 10
-    dy = Math.sin(angle) * 10
-    Definebullet(dx, dy, character.x + (character.width / 2), character.y + (character.height / 2), 25, 10, angle)
-}
-
 function BulletUpdate() {
-    bulletdata.forEach((obj_bullet, bullet_index) => { // movey move move
-        obj_bullet.x += obj_bullet.dx
-        obj_bullet.y += obj_bullet.dy
-        objectdata.forEach(obj_object => { // collide clide collide
-            if (isColliding(obj_bullet, obj_object) && obj_object.collision == true) {
-                bulletdata.splice(bullet_index, 1)
+    for (let i = state.bullets.length - 1; i >= 0; i--) {
+        const obj_bullet = state.bullets[i];
+
+        // move bullet
+        obj_bullet.x += obj_bullet.dx * 10;
+        obj_bullet.y += obj_bullet.dy * 10;
+
+        // world collision
+        for (const obj_object of objectdata) {
+            if (obj_object.collision && isColliding(obj_bullet, obj_object)) {
+                state.bullets.splice(i, 1);
+                break;
             }
-        });
-    });
-    requestAnimationFrame(BulletUpdate)
+        }
+
+        // if bullet got removed, skip everything else
+        if (!state.bullets[i]) continue;
+
+        // player collision
+        for (const playerId in state.players) {
+            const p = state.players[playerId];
+
+            if (playerId === obj_bullet.owner) continue;
+
+            if (isColliding(obj_bullet, {
+                x: p.x,
+                y: p.y,
+                width: 75,
+                height: 75
+            })) {
+                ws.send(JSON.stringify({
+                    type: "hit",
+                    target: playerId,
+                    damage: 10
+                }));
+
+                state.bullets.splice(i, 1);
+                break;
+            }
+        }
+
+        // if bullet got removed, skip bounds check
+        if (!state.bullets[i]) continue;
+
+        // out of bounds cleanup
+        if (
+            obj_bullet.x < -100 || obj_bullet.x > canvas.width + 100 ||
+            obj_bullet.y < -100 || obj_bullet.y > canvas.height + 100
+        ) {
+            state.bullets.splice(i, 1);
+        }
+    }
+
+    requestAnimationFrame(BulletUpdate);
 }
 BulletUpdate()
