@@ -39,24 +39,3 @@
 #AMMO_COUNTER.big_pop {
   transform: scale(1.3)
 }
-
-#HP_COUNTER {
-  transition: transform 0.30s, box-shadow 0.30s;
-  position: relative;
-  top: 525px;
-  left: 825px;
-
-  width: 175px;
-  height: 175px;
-  background-size: contain;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-repeat: no-repeat;
-  background-position: center;
-  
-
-  color: rgb(0, 0, 0);
-  font-size: 25px;
-  font-family: "Comic Sans MS", "Comic Sans", cursive;
-}
