@@ -28,6 +28,10 @@ let cam = {
     x: character.x - (canvas.width / 2),
     y: character.y - (canvas.height / 2)
 }
+let cam_offset = {
+    x: 0,
+    y: 0,
+}
 let speedx = 0
 let speedy = 0
 let canshoot = true

@@ -29,8 +29,8 @@ setInterval(() => {
 
 function renderobjects() {
     cam = {
-    X: character.x - (canvas.width / 2),
-    Y: character.y - (canvas.height / 2)
+    X: character.x - (canvas.width / 2) + cam_offset.x,
+    Y: character.y - (canvas.height / 2) + cam_offset.y
 }
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.translate(-cam.X, -cam.Y);

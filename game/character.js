@@ -3,6 +3,8 @@ function Movement() {
     character.oldy = character.y
     speedx *= 0.9
     speedy *= 0.9
+    cam_offset.x *= 0.8
+    cam_offset.y *= 0.8
     character.x += speedx
     character.y += speedy
     objectdata.forEach((obj, index) => { // AABB Collisions for each object inside of Object_Data
@@ -24,15 +26,19 @@ function Movement() {
 function KeyDetection() {
     if (keysPressed['KeyA'] || keysPressed['ArrowLeft']) {
         speedx += -0.5
+        cam_offset.x += -0.25
     }
     if (keysPressed['KeyD'] || keysPressed['ArrowRight']) {
         speedx += 0.5
+        cam_offset.x += 0.25
     }
     if (keysPressed['KeyW'] || keysPressed['ArrowUp']) {
         speedy -= 0.5
+        cam_offset.y -= 0.25
     }
     if (keysPressed['KeyS'] || keysPressed['ArrowDown']) {
         speedy += 0.5
+        cam_offset.y += 0.25
     }
     if (keysPressed['Space'] && canshoot == true && ammo > 0) { // ammo
         CreateBullet()
