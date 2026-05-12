@@ -28,7 +28,14 @@ setInterval(() => {
 
 
 function renderobjects() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    cam = {
+    X: character.x - (canvas.width / 2),
+    Y: character.y - (canvas.height / 2)
+}
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.translate(-cam.X, -cam.Y);
+    // Rendering
+    ctx.clearRect(cam.X, cam.Y,  canvas.width, canvas.height);
     ctx.fillStyle = "#FF0000";
     objectdata.forEach(obj => {
         if (obj.img != "") { // Objects

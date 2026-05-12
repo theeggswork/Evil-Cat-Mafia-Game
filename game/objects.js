@@ -37,7 +37,7 @@ function DefineText(text, x, y) {
 }
 
 function CreateBullet() {
-    let angle = Math.atan2(mouseY - (character.y + (character.height / 2)), mouseX - (character.x +(character.width / 2)));
+    let angle = Math.atan2((mouseY + cam.Y) - (character.y + (character.height / 2)), (mouseX + cam.X) - (character.x +(character.width / 2)));
     dx = Math.cos(angle) * 10
     dy = Math.sin(angle) * 10
     Definebullet(dx, dy, character.x + (character.width / 2), character.y + (character.height / 2), 25, 10, angle)

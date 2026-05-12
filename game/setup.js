@@ -24,6 +24,10 @@ let character = {
     width: 75,
     height: 75,
 }
+let cam = {
+    x: character.x - (canvas.width / 2),
+    y: character.y - (canvas.height / 2)
+}
 let speedx = 0
 let speedy = 0
 let canshoot = true
