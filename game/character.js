@@ -26,19 +26,19 @@ function Movement() {
 function KeyDetection() {
     if (keysPressed['KeyA'] || keysPressed['ArrowLeft']) {
         speedx += -0.5
-        cam_offset.x += -0.25
+        cam_offset.x += -0.5
     }
     if (keysPressed['KeyD'] || keysPressed['ArrowRight']) {
         speedx += 0.5
-        cam_offset.x += 0.25
+        cam_offset.x += 0.5
     }
     if (keysPressed['KeyW'] || keysPressed['ArrowUp']) {
         speedy -= 0.5
-        cam_offset.y -= 0.25
+        cam_offset.y -= 0.5
     }
     if (keysPressed['KeyS'] || keysPressed['ArrowDown']) {
         speedy += 0.5
-        cam_offset.y += 0.25
+        cam_offset.y += 0.5
     }
     if (keysPressed['Space'] && canshoot == true && ammo > 0) { // ammo
         CreateBullet()
