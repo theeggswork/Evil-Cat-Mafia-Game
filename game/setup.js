@@ -1,11 +1,15 @@
-const canvas = document.getElementById('Canvas');
-const ctx = canvas.getContext('2d');
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
 const keysPressed = {};
-
+let cam = {
+    X: 0,
+    Y: 0,
+    OX: 0,
+    OY: 0,
+}
 window.addEventListener('keydown', (e) => {
     keysPressed[e.code] = true;
 });
-
 window.addEventListener('keyup', (e) => {
     keysPressed[e.code] = false;
 });
@@ -17,35 +21,21 @@ canvas.addEventListener('mousemove', (event) => {
 });
 
 let character = {
-    x: 400,
-    y: 350,
-    oldx: 0,
-    oldy: 0,
-    width: 75,
-    height: 75,
-}
-let cam = {
-    x: character.x - (canvas.width / 2),
-    y: character.y - (canvas.height / 2)
-}
-let cam_offset = {
     x: 0,
     y: 0,
+    oldx: 0,
+    oldy: 0,
+    sx: 0,
+    sy: 0,
+    w: 50,
+    h: 50,
 }
-let speedx = 0
-let speedy = 0
-let canshoot = true
-let dx;
-let dy;
-let ammo = 30
-let maxammo = 60
-let reloadammo = 0
-let pframe = 0
+let objectdata = []
 function isColliding(a, b) {
     return (
-        a.x < b.x + b.width &&
-        a.x + a.width > b.x &&
-        a.y < b.y + b.height &&
-        a.y + a.height > b.y
+        a.x < b.x + b.w &&
+        a.x + a.w > b.x &&
+        a.y < b.y + b.h &&
+        a.y + a.h > b.y
     );
 }

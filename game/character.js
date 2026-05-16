@@ -1,76 +1,37 @@
 function Movement() {
     character.oldx = character.x
     character.oldy = character.y
-    speedx *= 0.9
-    speedy *= 0.9
-    cam_offset.x *= 0.8
-    cam_offset.y *= 0.8
-    character.x += speedx
-    character.y += speedy
-    objectdata.forEach((obj, index) => { // AABB Collisions for each object inside of Object_Data
+    character.sx *= 0.9
+    character.sy *= 0.9
+    character.x += character.sx
+    character.y += character.sy
+    objectdata.forEach((obj) => {
         if (isColliding(character, obj)) {
-            if (obj.collision == true) {
-                character.x = character.oldx;
-                character.y = character.oldy;
-                speedx = 0
-                speedy = 0
-            } else if (obj.type == "ammo") {
-                maxammo += obj.value
-                objectdata.splice(index, 1)
-            }
+            character.x = character.oldx
+            character.y = character.oldy
+            character.sx = 0
+            character.sy = 0
         }
-
     });
     requestAnimationFrame(Movement)
 }
+
 function KeyDetection() {
     if (keysPressed['KeyA'] || keysPressed['ArrowLeft']) {
-        speedx += -0.5
-        cam_offset.x += -0.5
+        character.sx -= 0.5
+        cam.OX -= 0.5
     }
     if (keysPressed['KeyD'] || keysPressed['ArrowRight']) {
-        speedx += 0.5
-        cam_offset.x += 0.5
+        character.sx += 0.5
+        cam.OX += 0.5
     }
     if (keysPressed['KeyW'] || keysPressed['ArrowUp']) {
-        speedy -= 0.5
-        cam_offset.y -= 0.5
+        character.sy -= 0.5
+        cam.OY -= 0.5
     }
     if (keysPressed['KeyS'] || keysPressed['ArrowDown']) {
-        speedy += 0.5
-        cam_offset.y += 0.5
-    }
-    if (keysPressed['Space'] && canshoot == true && ammo > 0) { // ammo
-        CreateBullet()
-        canshoot = false
-        ammo -= 1
-        AMMO_COUNTER.classList.add("pop");
-        setTimeout(() => {
-            canshoot = true;
-            AMMO_COUNTER.classList.remove("pop");
-        }, 100);
-    } else if (keysPressed[`Space`] && canshoot == true) { // no ammo
-        EmptyBullets.currentTime = 0
-        EmptyBullets.play()
-    }
-    if (keysPressed['KeyR']) { // Reload
-        if (maxammo > 0) {
-            ReloadBullets.currentTime = 0
-            ReloadBullets.play()
-            setTimeout(() => {
-                AMMO_COUNTER.classList.add("big_pop")
-                reloadammo = Math.min(30 - ammo, maxammo);
-                ammo += reloadammo;
-                maxammo -= reloadammo;
-                setTimeout(() => {
-                    AMMO_COUNTER.classList.remove("big_pop")
-                }, 300);
-            }, 1500);
-        } else {
-            EmptyBullets.currentTime = 0
-            EmptyBullets.play()
-        }
-
+        character.sy += 0.5
+        cam.OY += 0.5
     }
     requestAnimationFrame(KeyDetection)
 }
